@@ -277,8 +277,13 @@ const resultFor_foobar = findSearchTermInBooks("foobar", bookObjects);
 const resultFor_noBooks = findSearchTermInBooks("the", noBooks);
 const resultFor_noContent = findSearchTermInBooks("the", noContent);
 
-testReturnedResults("search term 'the' (multiple hits across books)", resultFor_the, expectedReturnFor_the)
-testReturnedResults("search term 'darkness' (wrapped word)", resultFor_darkenss, expectedReturnFor_darkness)
-testReturnedResults("search term 'foobar' (zero hits)", resultFor_foobar, expectedReturnFor_foobar)
-testReturnedResults("test against zero books", resultFor_noBooks, expectedReturnFor_noBooks)
-testReturnedResults("test against zero content", resultFor_noContent, expectedReturnFor_noContent)
+testReturnedResults("search term 'the' (multiple hits across books)",
+    resultFor_the, expectedReturnFor_the)
+testReturnedResults("search term 'darkness' (wrapped word)",
+    resultFor_darkenss, expectedReturnFor_darkness)
+testReturnedResults("search term 'foobar' (zero hits)",
+    resultFor_foobar, expectedReturnFor_foobar)
+testReturnedResults("test against zero books",
+    resultFor_noBooks, expectedReturnFor_noBooks)
+testReturnedResults("test against zero content",
+    resultFor_noContent, expectedReturnFor_noContent)
