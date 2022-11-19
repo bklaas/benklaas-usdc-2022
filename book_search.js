@@ -66,22 +66,22 @@ class book {
 
         return lines;
     }
-}
-
-// takes a book object and search term and returns a list of results in the proper form
-function search_for(book, searchterm) {
-    let results = []
-    for (let l in book.line_words) {
-        let words = book.line_words[l].Words;
-        if (words.includes(searchterm)) {
-            results.push({
-                "ISBN": book.ISBN,
-                "Page": book.Content[l].Page,
-                "Line": book.Content[l].Line
-            })
+    // takes a search term and returns a list of results in the proper form
+    search_for(searchterm) {
+        let results = []
+        for (let l in this.line_words) {
+            let words = this.line_words[l].Words;
+            if (words.includes(searchterm)) {
+                results.push({
+                    "ISBN": this.ISBN,
+                    "Page": this.Content[l].Page,
+                    "Line": this.Content[l].Line
+                })
+            }
         }
+        return results;
     }
-    return results;
+
 }
 
 // high-level function that searches an object for a search term, line by line
@@ -96,7 +96,7 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
     let results = [];
     for (let i in theseBooks.Books) {
         let thisBook = theseBooks.Books[i];
-        thisBookResults = search_for(thisBook, searchTerm);
+        thisBookResults = thisBook.search_for(searchTerm);
         if (thisBookResults.length > 0) {
             results = results.concat(thisBookResults);
         }
@@ -276,7 +276,6 @@ const resultFor_darkenss = findSearchTermInBooks("darkness", bookObjects);
 const resultFor_foobar = findSearchTermInBooks("foobar", bookObjects);
 const resultFor_noBooks = findSearchTermInBooks("the", noBooks);
 const resultFor_noContent = findSearchTermInBooks("the", noContent);
-
 testReturnedResults("search term 'the' (multiple hits across books)",
     resultFor_the, expectedReturnFor_the)
 testReturnedResults("search term 'darkness' (wrapped word)",
