@@ -24,6 +24,23 @@ class books {
             this.Books.push(new book(books[i]));
         }
     }
+    // books method for search_for that calls and assembles search_for() results for each book
+    search_for(searchTerm) {
+        // traverse scannedTextObj
+        let result = {
+            "SearchTerm": `${searchTerm}`,
+        };
+        let results = [];
+        for (let i in theseBooks.Books) {
+            let thisBook = theseBooks.Books[i];
+            let thisBookResults = thisBook.search_for(searchTerm);
+            if (thisBookResults.length > 0) {
+                results = results.concat(thisBookResults);
+            }
+        }
+        result.Results = results;
+        return result;
+    }
 }
 class book {
     constructor(book) {
@@ -67,11 +84,11 @@ class book {
         return lines;
     }
     // takes a search term and returns a list of results in the proper form
-    search_for(searchterm) {
+    search_for(searchTerm) {
         let results = []
         for (let l in this.line_words) {
             let words = this.line_words[l].Words;
-            if (words.includes(searchterm)) {
+            if (words.includes(searchTerm)) {
                 results.push({
                     "ISBN": this.ISBN,
                     "Page": this.Content[l].Page,
@@ -84,25 +101,12 @@ class book {
 
 }
 
-// high-level function that searches an object for a search term, line by line
+// high-level function that searches a books object for a search term
 function findSearchTermInBooks(searchTerm, scannedTextObj) {
     // create a list of book objects from scannedTextObj
     theseBooks = new books(scannedTextObj);
-
-    // traverse scannedTextObj
-    let result = {
-        "SearchTerm": `${searchTerm}`,
-    };
-    let results = [];
-    for (let i in theseBooks.Books) {
-        let thisBook = theseBooks.Books[i];
-        thisBookResults = thisBook.search_for(searchTerm);
-        if (thisBookResults.length > 0) {
-            results = results.concat(thisBookResults);
-        }
-    }
-    result.Results = results;
-    return result;
+    // search theseBooks for searchTerm and return the results
+    return theseBooks.search_for(searchTerm)
 }
 
 /*
